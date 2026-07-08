@@ -1,0 +1,8 @@
+# Topic A - Text Classification Pipeline Forensics
+# Conda env: topica (Python 3.11.15). CPU-only stack.
+# Pinned to the exact versions used for all reported results.
+# Note: reproducing the reference baseline F1 is version-sensitive, so these pins are part of the experimental record.
+pandas==3.0.3
+scikit-learn==1.9.0
+numpy==2.4.6
+scipy==1.17.1
