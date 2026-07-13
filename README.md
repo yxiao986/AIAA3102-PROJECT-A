@@ -73,15 +73,47 @@ project_A/
 
 ## Reproduce
 
-> Commands are added here as each stage lands. Run everything inside the `topica` env.
+Run everything inside the `topica` env, from the project root. Scripts write their outputs to
+`results/` and `predictions/`. Each ticket's script depends only on `data/` + the frozen decisions
+of earlier tickets, so they can be run in order.
 
 ```powershell
 conda activate topica
 
-# 1. Baseline (Ticket 1): load split, train TF-IDF + Logistic Regression,
-#    evaluate positive-class F1 on dev and held-out, export predictions.
+# Baseline (Ticket 1): plain-default TF-IDF + Logistic Regression.
+# Prints split counts + dev/held-out F1(target=1); writes the Ticket 1 prediction block.
 python pipeline/baseline.py
+
+# Ticket 1 — baseline discrepancy diagnosis (one-factor + grid probes vs the reference 0.7574).
+#   -> results/ticket1_probe.csv
+python experiments/ticket1_probe.py
+
+# Ticket 2 — text normalization. Dev sweep of URL/mention/hashtag/HTML/emoji/case transforms,
+#   then freeze strip_urls and score held-out once.
+#   -> results/ticket2_dev.csv, results/ticket2_examples.csv
+python experiments/ticket2_normalization.py
+python experiments/ticket2_freeze.py
+
+# Ticket 3 — feature & shortcut audit. Shallow-feature-only baselines vs text-only.
+#   -> results/ticket3_shortcuts.csv
+python experiments/ticket3_shortcuts.py
+
+# Ticket 4 — decision rule & model. Threshold sweep, C tuning, class weighting, alt classifiers
+#   (all on dev); freeze C=3 + threshold=0.45 and score held-out once.
+#   -> results/threshold_sweep.csv, results/ticket4_dev.csv
+python experiments/ticket4_decision.py
+
+# Ticket 5 — data-quality audit. Duplicate-conflict + confident-disagreement detection,
+#   then apply the manual adjudication overlay.
+#   -> results/data_quality_audit.csv
+python experiments/ticket5_audit.py
+python experiments/ticket5_manual_review.py
 ```
+
+`pipeline/normalize.py` is the shared normalization module imported by the Ticket 2+ scripts.
+`predictions/heldout_predictions.csv` and `results/summary.csv` accumulate one block/row per ticket
+that changes the pipeline (Tickets 1, 2, 4); each script replaces only its own ticket's rows.
+Held-out is scored exactly once per ticket, at that ticket's freeze step.
 
 ## Output artifacts (stable schemas)
 

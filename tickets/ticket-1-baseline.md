@@ -74,11 +74,15 @@ Grid: `min_df ∈ {2,3,5}` × `sublinear_tf ∈ {False,True}` × `ngram ∈ {(1,
 3. **Not convergence.** Every variant converges in ≤19 iterations, so even scikit-learn's true
    default `max_iter=100` is enough. The `max_iter=1000` in an earlier draft baseline was
    unnecessary insurance, not a fix — it produces the identical 0.7492.
-4. **Driven by TF-IDF vocabulary and regularization.** The levers that move held-out F1 toward
+4. **Not the scikit-learn version.** The plain baseline was re-run under scikit-learn 1.3.2, 1.5.2,
+   and 1.7.2 in isolated environments (`results/ticket1_versions.csv`). 1.5.2, 1.7.2, and 1.9.0 give
+   *identical* held-out F1 (0.7492); 1.3.2 differs by only −0.0006 (an older lbfgs default), and
+   none comes near the −0.0082 gap. Version is ruled out.
+5. **Driven by TF-IDF vocabulary and regularization.** The levers that move held-out F1 toward
    the reference are vocabulary pruning (`min_df`) and weaker regularization (`C`); `sublinear_tf`
    helps mildly. Bigrams at `min_df=1` move it strongly the *wrong* way (−0.0304), so if the
    reference used bigrams it also pruned the vocabulary.
-5. **The reference is reproducible within tolerance but not uniquely identifiable.** Five distinct
+6. **The reference is reproducible within tolerance but not uniquely identifiable.** Five distinct
    standard configurations reach the tolerance band, and they do not share a single story (some use
    bigrams, some do not; `C` ranges 2–10). A single reported F1 therefore **under-determines the
    pipeline** — the contract is consistent with a conventional TF-IDF + LR baseline but cannot pin
@@ -93,10 +97,11 @@ Grid: `min_df ∈ {2,3,5}` × `sublinear_tf ∈ {False,True}` × `ngram ∈ {(1,
 - None of the five in-tolerance configs is also the dev-best configuration, so no single config is
   best on both splits — consistent with the metric being under-determined rather than pointing to
   one "correct" pipeline.
-- Two candidate causes were left out of scope on purpose: tokenizer/stopwords/lowercasing
-  differences (these belong to Ticket 2, text normalization) and the scikit-learn version used to
-  compute the reference (untestable without downgrading the environment). Either could account for
-  the residual and is noted rather than chased.
+- After ruling out split, seed, convergence, and version, the two remaining candidates are a
+  tokenizer/stopword/lowercasing difference (deferred to Ticket 2, text normalization) or a
+  genuinely different train/dev/held-out assignment on the reference side. The residual is
+  attributed to preprocessing rather than chased to an exact config, for the reasons in the
+  limitations above.
 
 ## Decision
 

@@ -24,6 +24,17 @@ were evaluated on dev only — their held-out scores were deliberately not compu
 cannot be contaminated by held-out peeking (`experiments/ticket4_decision.py`, dev tables in
 `results/ticket4_dev.csv` and `results/threshold_sweep.csv`).
 
+Two search-design choices are deliberate. **`C` is searched on a logarithmic grid**
+({0.3, 1, 3, 10, 30}) because regularization acts on an order-of-magnitude scale; the dev curve is
+smooth and single-peaked, so the optimum is bracketed rather than stepped over, and a finer grid
+would chase F1 differences within dev-set noise — the same overfitting-the-validation-set risk the
+discipline guards against (cross-validation on train would be a more robust selector still).
+**The candidate classifiers are those suited to high-dimensional sparse TF-IDF on CPU:** LinearSVC
+(a margin/hinge-loss linear model — a genuinely different decision boundary from LR), MultinomialNB
+(the classic probabilistic text classifier, a different modeling assumption), and SGD(log_loss)
+(LR by another optimizer, a sanity check). Tree ensembles and kNN are ill-suited to ~15k sparse
+lexical features, and neural models fall outside the CPU/simple-baseline scope.
+
 ## Evidence (dev)
 
 ### Threshold sweep (Logistic Regression, C=1) — the precision–recall curve
@@ -75,18 +86,29 @@ Flips vs the Ticket 2 pipeline: `fixed_fp=2, fixed_fn=43, new_fp=53, new_fn=0`.
    real-disaster tweets** (`fixed_fn=43`) at the cost of **53 new false alarms** (`new_fp=53`),
    with essentially no movement in the other two cells. It is a pure operating-point shift toward
    recall, exactly what lowering the threshold from 0.5 to 0.45 predicts.
-2. **F1 rose while accuracy fell — and that is the point of not reporting one number.** Held-out
-   F1 went up (0.7536 → 0.7653) but accuracy went *down* (0.8063 → 0.8011). Accuracy counts all
-   errors equally, so 53 new false alarms outweigh 43 recovered positives; but F1 on the positive
-   class rewards recall, so the same move is a win. Reporting only accuracy would call this change
-   harmful; reporting only F1 would hide the 53 new false alarms. Both are true, and the
-   flip-count breakdown is what makes the trade-off legible.
+2. **F1 rose while accuracy fell — the point of not reporting one number.** The held-out confusion
+   matrices (654 disasters, 869 non-disasters) make the trade concrete:
+
+   | pipeline | TP | FP | FN | TN | precision | recall |
+   |----------|:--:|:--:|:--:|:--:|:---------:|:------:|
+   | Ticket 2 (thr 0.5) | 451 | 92 | 203 | 777 | 0.831 | 0.690 |
+   | Ticket 4 (thr 0.45) | 494 | 143 | 160 | 726 | 0.776 | 0.755 |
+
+   Lowering the threshold recovers 43 missed disasters (FN→TP) at the cost of 51 more false alarms
+   (TN→FP). **Accuracy falls** (F1 0.7536→0.7653, acc 0.8063→0.8011) because it counts all 1523 rows
+   equally — 43 gains vs 51 losses is a net −8 correct. **F1 rises** because its formula
+   (`2TP/(2TP+FP+FN)`) has no TN term: it sees only the positive class, where recall (0.690→0.755)
+   climbs far more than precision (0.831→0.776) dips. The two metrics diverge because they encode
+   different values — accuracy treats a missed disaster and a false alarm as equally bad, F1 treats
+   catching disasters as the goal. Reporting only accuracy would call this harmful; reporting only F1
+   would hide the 51 new false alarms. The flip breakdown is what makes the trade-off legible.
 3. **`C=3` is a real, dev-confirmed model improvement** (dev F1 0.744 → 0.751), independent of the
    threshold. Beyond C=3 it overfits (C=30 drops to 0.731).
 4. **Class weighting and low thresholds are two routes to the same place.** `class_weight=balanced`
-   (P=0.759, R=0.737) lands almost exactly where threshold 0.45 does — both rebalance toward
-   recall. They are not stacked; the explicit threshold is kept because it exposes the whole curve
-   rather than a single re-weighted point.
+   up-weights the minority positive class during training — a *train-time* analogue of lowering the
+   threshold — so it lands almost exactly where threshold 0.45 does (P=0.759, R=0.737), both
+   rebalancing toward recall. They are not stacked; the explicit threshold is kept because it
+   exposes the whole curve rather than a single re-weighted point.
 5. **No second classifier beats the tuned Logistic Regression on dev.** LinearSVC (0.735) and
    MultinomialNB (0.729) are worse; SGDClassifier(log_loss) (0.753) essentially *is* logistic
    regression by another optimizer and does not beat the C=3 + threshold combo (0.758). Consistent
@@ -114,9 +136,13 @@ than on a single F1 number.
 
 - Threshold, `C`, and class weight all move the same precision–recall dimension, so their gains
   overlap; the combined dev F1 (0.758) is not the sum of individual gains.
-- The threshold is tuned to this dev split. On a differently balanced deployment stream the
-  F1-optimal threshold would move, so 0.45 is not a universal constant — it is the dev-calibrated
-  operating point for this data.
+- The threshold is a hyperparameter tuned on dev, which is legitimate, and it generalized *within*
+  this dataset — the dev-optimal 0.45 also improved held-out (0.7536 → 0.7653), so it was not a
+  dev-specific fluke. But it is calibrated to this data's class balance and score distribution: on a
+  differently balanced stream the F1-optimal threshold would move, so 0.45 is not a universal
+  constant. Crucially this affects only the operating point, not the model — the learned ranking
+  (the PR curve's shape) transfers, and one would re-calibrate the threshold on a sample of the new
+  distribution rather than retrain.
 
 ## Decision
 

@@ -17,6 +17,16 @@ disaster semantics, so removing them should reduce spurious signal without hurti
 model is leaning on URL presence as a shortcut, in which case some borderline predictions will
 flip both ways.
 
+## Data profile (motivation, run after the fact)
+
+The transforms below started as a conventional normalization checklist. A surface-feature profile
+(`results/ticket2_profile.csv`) run afterwards shows the checklist was not principled and corrects
+it in two directions: **emoji never occur** in the 7613 rows (so `strip_emoji` tests an empty set —
+a redundant confirmatory null), and **punctuation** was *omitted* despite `!` correlating with the
+label (−0.173), so a punctuation-preserving variant is added below. The lesson — profile before
+choosing what to clean — is recorded rather than hidden. The profile also flags `has_url` (+0.245)
+as the strongest positive correlate, which motivates the URL test.
+
 ## Lever
 
 Text normalization applied to the raw `text` column before vectorization. Implemented as
@@ -85,12 +95,18 @@ corrected). The dev improvement holds on held-out and is dominated by false-posi
 3. **Case is not useful signal here.** `preserve_case` *lowers* F1 (0.7388 → 0.7311): keeping
    case fragments the vocabulary (`FIRE` / `Fire` / `fire` become distinct tokens), diluting
    signal more than any all-caps urgency cue adds. Default lowercasing is retained.
-4. **Hashtag-symbol and emoji handling are no-ops under the default tokenizer.** Both produce
-   *zero* flips, because `\b\w\w+\b` already splits on `#` (so `#fire` was already `fire`) and
-   never matches emoji as tokens. The model never saw those characters, so "handling" them
-   changes nothing — a result that only becomes visible by measuring flips rather than assuming.
+4. **Hashtag-symbol and emoji handling are no-ops.** Both produce *zero* flips. For hashtags the
+   default `\b\w\w+\b` tokenizer already splits on `#` (so `#fire` was already `fire`); for emoji
+   the reason is stronger — the profile shows the dataset contains **no emoji at all**, so
+   `strip_emoji` was testing an empty set. Either way the characters were never seen, visible only
+   because flips were measured rather than assumed.
 5. **Mentions and HTML unescaping are rejected.** `strip_mentions` slightly hurts (−3 net);
    `unescape_html` is a wash (too few `&amp;`-style entities in this data to matter).
+6. **A punctuation-preserving tokenizer helps slightly but is declined.** Keeping `!`/`?` as tokens
+   (`results/ticket2_punct_probe.csv`) gives a small dev gain (0.7437 → 0.7483). It is not adopted:
+   the profile shows `!` is a negatively-correlated *posting-style* feature, so the gain comes from
+   a stylistic artifact — the mirror image of the shortcut `strip_urls` removes, and exactly the
+   kind of fragile cue this project declines.
 
 ## Robustness note
 
@@ -105,13 +121,15 @@ URL-shortcut stress test — not on the +0.0044 F1 alone.
   weak true-positive crutch, so the net gain (+13 held-out) understates how much genuine
   reshaping happened (42 corrected vs 29 broken). Whether URL *presence* is ever legitimate task
   information is not settled here — it is handed to Ticket 3 (shortcut audit).
-- Effects are measured under scikit-learn's default tokenizer. A different tokenizer (e.g. one
-  that keeps emoji or single characters) could make the "no-op" transforms non-trivial; that is
-  out of scope for this ticket.
+- Most effects are measured under scikit-learn's default tokenizer. One tokenizer change was tested
+  directly (the punctuation-preserving variant, finding 6); other tokenizer redefinitions
+  (e.g. keeping single characters) remain out of scope, though the profile shows the highest-value
+  candidates (emoji, punctuation) are already covered.
 
 ## Decision
 
 Adopt `strip_urls` as the normalization step (`decision = adopt_strip_urls`). Reject mentions,
-HTML unescape, hashtag-symbol, emoji, and case preservation. Recorded in `results/summary.csv`;
-Ticket 2 held-out predictions written to `predictions/heldout_predictions.csv` under
+HTML unescape, hashtag-symbol, emoji, case preservation, and the punctuation-preserving tokenizer
+(a stylistic-artifact gain, finding 6). Recorded in `results/summary.csv`; Ticket 2 held-out
+predictions written to `predictions/heldout_predictions.csv` under
 `model_name = tfidf_logreg_stripurls`.
