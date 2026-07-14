@@ -1,0 +1,3 @@
+variant,token_pattern,vocab_size,dev_f1_target_1,fixed_fp,fixed_fn,new_fp,new_fn
+default_tokenizer,(?u)\b\w\w+\b,12445,0.7437,0,0,0,0
+punct_preserving_tokenizer,(?u)\b\w\w+\b|[!?],12447,0.7483,9,8,5,6

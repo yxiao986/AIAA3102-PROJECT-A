@@ -1,0 +1,11 @@
+group,label,dev_precision_target_1,dev_recall_target_1,dev_f1_target_1
+C_sweep,C=0.3,0.8442,0.5954,0.6983
+C_sweep,C=1,0.8237,0.6779,0.7437
+C_sweep,C=3,0.8021,0.7053,0.7506
+C_sweep,C=10,0.7871,0.7053,0.744
+C_sweep,C=30,0.7629,0.7023,0.7313
+class_weight,class_weight=balanced,0.7594,0.7374,0.7483
+alt_classifier,LinearSVC,0.7782,0.6962,0.7349
+alt_classifier,MultinomialNB,0.8689,0.6275,0.7287
+alt_classifier,SGDClassifier(log_loss),0.8017,0.7099,0.753
+combo,C=3.0+threshold=0.45,0.7781,0.7389,0.758

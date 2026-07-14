@@ -1,0 +1,79 @@
+id,issue_type,evidence,original_label,proposed_label,disposition,confidence
+881,duplicate_label_conflict,"dup group ids=[881, 898, 907, 916] labels=[1, 0, 1, 0] text='to fight bioterrorism sir.'",1,,ambiguous,low
+898,duplicate_label_conflict,"dup group ids=[881, 898, 907, 916] labels=[1, 0, 1, 0] text='to fight bioterrorism sir.'",0,,ambiguous,low
+907,duplicate_label_conflict,"dup group ids=[881, 898, 907, 916] labels=[1, 0, 1, 0] text='to fight bioterrorism sir.'",1,,keep_but_flag,low
+916,duplicate_label_conflict,"dup group ids=[881, 898, 907, 916] labels=[1, 0, 1, 0] text='to fight bioterrorism sir.'",0,,ambiguous,low
+1723,duplicate_label_conflict,"dup group ids=[1723, 1922] labels=[1, 0] text='mmmmmm i'm burning.... i'm burning buildings i'm building.... oooooohhhh oooh oo...'",1,,ambiguous,low
+1752,duplicate_label_conflict,"dup group ids=[1752, 1968] labels=[0, 1] text='i pledge allegiance to the p.o.p.e. and the burning buildings of epic city. ????...'",0,,ambiguous,low
+1760,duplicate_label_conflict,"dup group ids=[1760, 1950] labels=[1, 0] text='like for the music video i want some real action shit like burning buildings and...'",1,,ambiguous,low
+1922,duplicate_label_conflict,"dup group ids=[1723, 1922] labels=[1, 0] text='mmmmmm i'm burning.... i'm burning buildings i'm building.... oooooohhhh oooh oo...'",0,,ambiguous,low
+1950,duplicate_label_conflict,"dup group ids=[1760, 1950] labels=[1, 0] text='like for the music video i want some real action shit like burning buildings and...'",0,,ambiguous,low
+1968,duplicate_label_conflict,"dup group ids=[1752, 1968] labels=[0, 1] text='i pledge allegiance to the p.o.p.e. and the burning buildings of epic city. ????...'",1,,ambiguous,low
+4068,duplicate_label_conflict,"dup group ids=[4068, 4072, 4076, 4077] labels=[1, 1, 0, 1] text='.potus #strategicpatience is a strategy for #genocide; refugees; idp internally ...'",1,1,fix,high
+4072,duplicate_label_conflict,"dup group ids=[4068, 4072, 4076, 4077] labels=[1, 1, 0, 1] text='.potus #strategicpatience is a strategy for #genocide; refugees; idp internally ...'",1,1,fix,high
+4076,duplicate_label_conflict,"dup group ids=[4068, 4072, 4076, 4077] labels=[1, 1, 0, 1] text='.potus #strategicpatience is a strategy for #genocide; refugees; idp internally ...'",0,1,fix,high
+4077,duplicate_label_conflict,"dup group ids=[4068, 4072, 4076, 4077] labels=[1, 1, 0, 1] text='.potus #strategicpatience is a strategy for #genocide; refugees; idp internally ...'",1,1,fix,high
+4656,duplicate_label_conflict,"dup group ids=[4656, 4659, 4669, 4672, 4684, 4691] labels=[0, 1, 1, 0, 0, 0] text='he came to a land which was engulfed in tribal war and turned it into a land of ...'",0,0,fix,high
+4659,duplicate_label_conflict,"dup group ids=[4656, 4659, 4669, 4672, 4684, 4691] labels=[0, 1, 1, 0, 0, 0] text='he came to a land which was engulfed in tribal war and turned it into a land of ...'",1,0,fix,high
+4669,duplicate_label_conflict,"dup group ids=[4656, 4659, 4669, 4672, 4684, 4691] labels=[0, 1, 1, 0, 0, 0] text='he came to a land which was engulfed in tribal war and turned it into a land of ...'",1,0,fix,high
+4672,duplicate_label_conflict,"dup group ids=[4656, 4659, 4669, 4672, 4684, 4691] labels=[0, 1, 1, 0, 0, 0] text='he came to a land which was engulfed in tribal war and turned it into a land of ...'",0,0,fix,high
+4684,duplicate_label_conflict,"dup group ids=[4656, 4659, 4669, 4672, 4684, 4691] labels=[0, 1, 1, 0, 0, 0] text='he came to a land which was engulfed in tribal war and turned it into a land of ...'",0,0,fix,high
+4691,duplicate_label_conflict,"dup group ids=[4656, 4659, 4669, 4672, 4684, 4691] labels=[0, 1, 1, 0, 0, 0] text='he came to a land which was engulfed in tribal war and turned it into a land of ...'",0,,keep_but_flag,high
+5662,duplicate_label_conflict,"dup group ids=[5662, 5699, 5710] labels=[1, 0, 0] text='who is bringing the tornadoes and floods. who is bringing the climate change. go...'",1,,keep_but_flag,high
+5699,duplicate_label_conflict,"dup group ids=[5662, 5699, 5710] labels=[1, 0, 0] text='who is bringing the tornadoes and floods. who is bringing the climate change. go...'",0,0,fix,high
+5710,duplicate_label_conflict,"dup group ids=[5662, 5699, 5710] labels=[1, 0, 0] text='who is bringing the tornadoes and floods. who is bringing the climate change. go...'",0,0,fix,high
+5996,duplicate_label_conflict,"dup group ids=[5996, 6023, 6031] labels=[1, 1, 0] text='#foodscare #offers2go #nestleindia slips into loss after #magginoodle #ban unsaf...'",1,1,fix,high
+6012,duplicate_label_conflict,"dup group ids=[6012, 6017] labels=[1, 0] text='caution: breathing may be hazardous to your health.'",1,,ambiguous,low
+6017,duplicate_label_conflict,"dup group ids=[6012, 6017] labels=[1, 0] text='caution: breathing may be hazardous to your health.'",0,,ambiguous,low
+6023,duplicate_label_conflict,"dup group ids=[5996, 6023, 6031] labels=[1, 1, 0] text='#foodscare #offers2go #nestleindia slips into loss after #magginoodle #ban unsaf...'",1,,keep_but_flag,high
+6031,duplicate_label_conflict,"dup group ids=[5996, 6023, 6031] labels=[1, 1, 0] text='#foodscare #offers2go #nestleindia slips into loss after #magginoodle #ban unsaf...'",0,1,fix,high
+6087,duplicate_label_conflict,"dup group ids=[6087, 6090, 6097, 6111, 6118, 6132] labels=[0, 0, 1, 0, 0, 1] text='the prophet (peace be upon him) said 'save yourself from hellfire even if it is ...'",0,0,fix,high
+6088,duplicate_label_conflict,"dup group ids=[6088, 6112, 6125] labels=[0, 1, 0] text='hellfire is surrounded by desires so be careful and donûªt let your desires con...'",0,0,fix,high
+6090,duplicate_label_conflict,"dup group ids=[6087, 6090, 6097, 6111, 6118, 6132] labels=[0, 0, 1, 0, 0, 1] text='the prophet (peace be upon him) said 'save yourself from hellfire even if it is ...'",0,0,fix,high
+6094,duplicate_label_conflict,"dup group ids=[6094, 6105, 6123] labels=[0, 0, 1] text='#allah describes piling up #wealth thinking it would last #forever as the descri...'",0,0,fix,high
+6097,duplicate_label_conflict,"dup group ids=[6087, 6090, 6097, 6111, 6118, 6132] labels=[0, 0, 1, 0, 0, 1] text='the prophet (peace be upon him) said 'save yourself from hellfire even if it is ...'",1,0,fix,high
+6105,duplicate_label_conflict,"dup group ids=[6094, 6105, 6123] labels=[0, 0, 1] text='#allah describes piling up #wealth thinking it would last #forever as the descri...'",0,0,fix,high
+6111,duplicate_label_conflict,"dup group ids=[6087, 6090, 6097, 6111, 6118, 6132] labels=[0, 0, 1, 0, 0, 1] text='the prophet (peace be upon him) said 'save yourself from hellfire even if it is ...'",0,0,fix,high
+6112,duplicate_label_conflict,"dup group ids=[6088, 6112, 6125] labels=[0, 1, 0] text='hellfire is surrounded by desires so be careful and donûªt let your desires con...'",1,,keep_but_flag,high
+6113,duplicate_label_conflict,"dup group ids=[6113, 6134] labels=[0, 1] text='hellfire! we donûªt even want to think about it or mention it so letûªs not do...'",0,,ambiguous,low
+6118,duplicate_label_conflict,"dup group ids=[6087, 6090, 6097, 6111, 6118, 6132] labels=[0, 0, 1, 0, 0, 1] text='the prophet (peace be upon him) said 'save yourself from hellfire even if it is ...'",0,0,fix,high
+6123,duplicate_label_conflict,"dup group ids=[6094, 6105, 6123] labels=[0, 0, 1] text='#allah describes piling up #wealth thinking it would last #forever as the descri...'",1,0,fix,high
+6125,duplicate_label_conflict,"dup group ids=[6088, 6112, 6125] labels=[0, 1, 0] text='hellfire is surrounded by desires so be careful and donûªt let your desires con...'",0,0,fix,high
+6132,duplicate_label_conflict,"dup group ids=[6087, 6090, 6097, 6111, 6118, 6132] labels=[0, 0, 1, 0, 0, 1] text='the prophet (peace be upon him) said 'save yourself from hellfire even if it is ...'",1,,keep_but_flag,high
+6134,duplicate_label_conflict,"dup group ids=[6113, 6134] labels=[0, 1] text='hellfire! we donûªt even want to think about it or mention it so letûªs not do...'",1,,keep_but_flag,low
+6220,duplicate_label_conflict,"dup group ids=[6220, 6223] labels=[0, 1] text='rt notexplained: the only known image of infamous hijacker d.b. cooper. http://t...'",0,,keep_but_flag,low
+6223,duplicate_label_conflict,"dup group ids=[6220, 6223] labels=[0, 1] text='rt notexplained: the only known image of infamous hijacker d.b. cooper. http://t...'",1,,keep_but_flag,low
+6537,duplicate_label_conflict,"dup group ids=[6537, 6548, 6566] labels=[1, 1, 0] text='cleared:incident with injury:i-495 inner loop exit 31 - md 97/georgia ave silver...'",1,1,fix,high
+6548,duplicate_label_conflict,"dup group ids=[6537, 6548, 6566] labels=[1, 1, 0] text='cleared:incident with injury:i-495 inner loop exit 31 - md 97/georgia ave silver...'",1,1,fix,high
+6566,duplicate_label_conflict,"dup group ids=[6537, 6548, 6566] labels=[1, 1, 0] text='cleared:incident with injury:i-495 inner loop exit 31 - md 97/georgia ave silver...'",0,1,fix,high
+8018,duplicate_label_conflict,"dup group ids=[8018, 8044] labels=[1, 0] text='wowo--=== 12000 nigerian refugees repatriated from cameroon'",1,,keep_but_flag,low
+8044,duplicate_label_conflict,"dup group ids=[8018, 8044] labels=[1, 0] text='wowo--=== 12000 nigerian refugees repatriated from cameroon'",0,,ambiguous,low
+8698,duplicate_label_conflict,"dup group ids=[8698, 8702, 8714, 8735, 8739] labels=[1, 0, 0, 1, 1] text='that horrible sinking feeling when youûªve been at home on your phone for a whi...'",1,1,fix,high
+8702,duplicate_label_conflict,"dup group ids=[8698, 8702, 8714, 8735, 8739] labels=[1, 0, 0, 1, 1] text='that horrible sinking feeling when youûªve been at home on your phone for a whi...'",0,1,fix,high
+8714,duplicate_label_conflict,"dup group ids=[8698, 8702, 8714, 8735, 8739] labels=[1, 0, 0, 1, 1] text='that horrible sinking feeling when youûªve been at home on your phone for a whi...'",0,1,fix,high
+8735,duplicate_label_conflict,"dup group ids=[8698, 8702, 8714, 8735, 8739] labels=[1, 0, 0, 1, 1] text='that horrible sinking feeling when youûªve been at home on your phone for a whi...'",1,1,fix,high
+8739,duplicate_label_conflict,"dup group ids=[8698, 8702, 8714, 8735, 8739] labels=[1, 0, 0, 1, 1] text='that horrible sinking feeling when youûªve been at home on your phone for a whi...'",1,1,fix,high
+9470,duplicate_label_conflict,"dup group ids=[9470, 9472] labels=[0, 1] text='in #islam saving a person is equal in reward to saving all humans! islam is the ...'",0,,ambiguous,low
+9472,duplicate_label_conflict,"dup group ids=[9470, 9472] labels=[0, 1] text='in #islam saving a person is equal in reward to saving all humans! islam is the ...'",1,,ambiguous,low
+467,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0991 < 0.1, keyword=armageddon, split=dev",1,,ambiguous,medium
+796,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0903 < 0.1, keyword=battle, split=dev",1,0,fix,medium
+805,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0994 < 0.1, keyword=battle, split=dev",1,0,fix,medium
+1040,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0556 < 0.1, keyword=bleeding, split=dev",1,0,fix,medium
+1051,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0944 < 0.1, keyword=bleeding, split=dev",1,0,fix,medium
+1836,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0938 < 0.1, keyword=burned, split=train",1,,ambiguous,medium
+4395,reject_false_positive,"LR(C=3) label=1 but p(target=1)=0.0875 < 0.1, keyword=earthquake, split=dev",1,,reject_false_positive,medium
+4711,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0965 < 0.1, keyword=evacuate, split=dev",1,0,fix,medium
+5330,reject_false_positive,"LR(C=3) label=0 but p(target=1)=0.9190 > 0.9, keyword=fire, split=train",0,,reject_false_positive,medium
+5461,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0832 < 0.1, keyword=flames, split=dev",1,0,fix,medium
+5559,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0828 < 0.1, keyword=flattened, split=dev",1,0,fix,medium
+6325,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0768 < 0.1, keyword=hostage, split=dev",1,0,fix,medium
+6407,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0319 < 0.1, keyword=hurricane, split=dev",1,0,fix,high
+7457,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0833 < 0.1, keyword=obliteration, split=dev",1,0,fix,medium
+7722,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0429 < 0.1, keyword=panicking, split=dev",1,0,fix,high
+7761,reject_false_positive,"LR(C=3) label=0 but p(target=1)=0.9322 > 0.9, keyword=police, split=dev",0,,reject_false_positive,medium
+7844,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0890 < 0.1, keyword=quarantine, split=dev",1,0,fix,medium
+9276,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0849 < 0.1, keyword=sunk, split=dev",1,0,fix,medium
+9738,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0543 < 0.1, keyword=tragedy, split=dev",1,0,fix,medium
+9780,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0860 < 0.1, keyword=trapped, split=dev",1,0,fix,medium
+10318,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0721 < 0.1, keyword=weapon, split=dev",1,,ambiguous,medium
+10823,likely_mislabel,"LR(C=3) label=1 but p(target=1)=0.0532 < 0.1, keyword=wrecked, split=dev",1,0,fix,medium

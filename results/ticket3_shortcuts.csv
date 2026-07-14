@@ -1,0 +1,12 @@
+model,n_features,dev_f1_target_1,heldout_f1_target_1,feature_type_note
+floor,1,0.0,0.0,reference floor (no signal)
+keyword_only,222,0.6599,0.6905,task info (curated Kaggle disaster keyword)
+char_len_only,1,0.4345,0.4315,"artifact (tweet length, not about disaster content)"
+has_url_only,1,0.5851,0.611,"artifact (URL presence, a posting-style proxy)"
+n_hashtags_only,1,0.035,0.052,artifact (hashtag usage style)
+frac_upper_only,1,0.0,0.0,artifact (capitalization / shouting style)
+has_location_only,1,0.0,0.0,mixed (free-text field; presence alone is a weak proxy)
+metadata_numeric_bundle,5,0.5127,0.5527,artifact bundle (surface stats only)
+all_shortcuts,227,0.6537,0.6853,mixed (task info + artifacts combined)
+text_only,15269,0.7388,0.7492,reference (full text signal)
+text_plus_all_shortcuts,15496,0.7323,0.7564,mixed (shortcuts stacked on full text)

@@ -56,19 +56,40 @@ and if not, why (split / seed / version / preprocessing).
 
 ```
 project_A/
+├── report.pdf                     # final IEEE-format project report
+├── README.md                      # this file: setup, data, reproduce commands
+├── requirements.txt               # pinned CPU stack (scikit-learn 1.9.0, pandas 3.0.3)
+│
 ├── data/
-│   ├── split_indices.json      # fixed split (committed)
-│   └── train.csv               # downloaded, git-ignored
+│   ├── split_indices.json         # fixed train/dev/heldout split by id (do not regenerate)
+│   ├── README_DATA.md             # data source and split documentation
+│   └── train.csv                  # Kaggle labeled data (download; git-ignored)
 ├── configs/
-│   └── project_contract.json   # reference baseline metric + tolerance
-├── pipeline/                   # data loading, model, evaluation code
-├── experiments/                # per-ticket experiment scripts
-├── predictions/                # heldout_predictions.csv (per frozen ticket)
-├── results/                    # summary.csv, threshold_sweep.csv, data_quality_audit.csv (git-ignored)
-├── tickets/                    # ticket-1-baseline.md ... ticket-5-data-quality.md
-├── logs/                       # chat.md (AI interaction log)
-├── requirements.txt
-└── README.md
+│   └── project_contract.json      # reference held-out F1 (0.7574) + tolerance
+│
+├── pipeline/
+│   ├── baseline.py                # plain-default TF-IDF + Logistic Regression baseline
+│   └── normalize.py               # composable text-normalization transforms (Ticket 2+)
+├── experiments/                   # one or more scripts per ticket
+│   ├── ticket1_probe.py           # T1: discrepancy probes (one-factor + grid)
+│   ├── ticket1_version_probe.py   # T1: per-env version check  (+ ticket1_versions_compile.py)
+│   ├── ticket2_profile.py         # T2: surface-feature profile
+│   ├── ticket2_normalization.py   # T2: dev sweep of transforms  (+ ticket2_freeze.py, ticket2_punct_probe.py)
+│   ├── ticket3_shortcuts.py       # T3: shallow-feature shortcut audit
+│   ├── ticket4_decision.py        # T4: threshold / C / model sweep
+│   └── ticket5_audit.py           # T5: data-quality detectors  (+ ticket5_manual_review.py)
+│
+├── tickets/                       # per-investigation write-ups
+│   └── ticket-1-baseline.md ... ticket-5-data-quality.md
+├── predictions/
+│   └── heldout_predictions.csv    # one block per pipeline-changing ticket (T1, T2, T4)
+├── results/                       # machine-checkable artifacts (all committed)
+│   ├── summary.csv                # per-ticket metrics + prediction-change counts
+│   ├── threshold_sweep.csv        # T4 precision–recall curve
+│   ├── data_quality_audit.csv     # T5 audit (id, issue_type, evidence, disposition, confidence)
+│   └── ticket{1,2,3}_*.csv        # per-ticket probe/profile tables
+└── logs/
+    └── chat.md                    # AI interaction log
 ```
 
 ## Reproduce
@@ -88,11 +109,15 @@ python pipeline/baseline.py
 #   -> results/ticket1_probe.csv
 python experiments/ticket1_probe.py
 
-# Ticket 2 — text normalization. Dev sweep of URL/mention/hashtag/HTML/emoji/case transforms,
-#   then freeze strip_urls and score held-out once.
-#   -> results/ticket2_dev.csv, results/ticket2_examples.csv
+# Ticket 2 — text normalization.
+#   Surface-feature profile that motivates the lever choices -> results/ticket2_profile.csv
+python experiments/ticket2_profile.py
+#   Dev sweep of URL/mention/hashtag/HTML/emoji/case transforms -> results/ticket2_dev.csv, ticket2_examples.csv
 python experiments/ticket2_normalization.py
+#   Freeze strip_urls and score held-out once
 python experiments/ticket2_freeze.py
+#   Supplementary: punctuation-preserving tokenizer probe (declined) -> results/ticket2_punct_probe.csv
+python experiments/ticket2_punct_probe.py
 
 # Ticket 3 — feature & shortcut audit. Shallow-feature-only baselines vs text-only.
 #   -> results/ticket3_shortcuts.csv
@@ -114,6 +139,20 @@ python experiments/ticket5_manual_review.py
 `predictions/heldout_predictions.csv` and `results/summary.csv` accumulate one block/row per ticket
 that changes the pipeline (Tickets 1, 2, 4); each script replaces only its own ticket's rows.
 Held-out is scored exactly once per ticket, at that ticket's freeze step.
+
+### Optional: version-sensitivity diagnostic (Ticket 1)
+
+`results/ticket1_versions.csv` (does the reference gap come from the scikit-learn version?) is
+produced by re-running the plain baseline under older scikit-learn in isolated environments. This
+needs separate envs, not the `topica` env:
+
+```powershell
+# For each version, create an isolated env; force OpenBLAS — the conda-forge MKL build
+# crashes (illegal instruction) on this CPU (i9-14900HX, AVX-512 fused off).
+conda create -n topica_sk1_5 python=3.11 "scikit-learn=1.5" "libblas=*=*openblas" pandas -y
+conda run -n topica_sk1_5 python experiments/ticket1_version_probe.py   # repeat per env
+python experiments/ticket1_versions_compile.py   # aggregate -> results/ticket1_versions.csv
+```
 
 ## Output artifacts (stable schemas)
 

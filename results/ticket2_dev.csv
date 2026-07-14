@@ -1,0 +1,8 @@
+variant,normalize_flags,preserve_case,dev_f1_target_1,fixed_fp,fixed_fn,new_fp,new_fn,net_flips
+baseline_no_cleaning,{},False,0.7388,0,0,0,0,0
+strip_urls,{'strip_urls': True},False,0.7437,36,10,11,20,15
+strip_mentions,{'strip_mentions': True},False,0.7366,0,1,2,2,-3
+strip_hashtag_symbol,{'strip_hashtag_symbol': True},False,0.7388,0,0,0,0,0
+unescape_html,{'unescape_html': True},False,0.7384,2,0,1,1,0
+strip_emoji,{'strip_emoji': True},False,0.7388,0,0,0,0,0
+preserve_case,{},True,0.7311,14,12,13,20,-7
